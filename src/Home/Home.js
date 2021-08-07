@@ -27,20 +27,21 @@ function Home() {
     const [salute, setSalute] = useState()
 
     
+    const animateIt = (e) => {
+        const {offsetX: x, offsetY: y} = e,
+        {offsetWidth: width, offsetHeight: height} = linkduo.current,
+        
+        move = 25,
+        xMove = x / width * (move * 2) - move,
+        yMove = y / height * (move * 2) - move;
+        console.log(e);
+        linkduo.current.style.transform = `translate(${xMove}px, ${yMove}px)`;
+        if (e.type === 'mouseleave') linkduo.current.style.transform = ''
+    }
     useEffect(() => {
-        const animateIt = (e) => {
-            const {offsetX: x, offsetY: y} = e,
-            {offsetWidth: width, offsetHeight: height} = e,
-            move = 25,
-            xMove = x / width * (move * 2) - move,
-            yMove = y / height * (move * 2) - move;
     
-            linkduo.current.style.transform = `translate(${xMove}px, ${yMove}px)`;
-            if (e.type === 'mouseleave') linkduo.current.style.transform = ''
-        }
-    
-        // linkduo.current.addEventListener('mouseenter', linkduo.current.style.transform = 'translate(20%)');
-        linkduo.current.addEventListener('mouseLeave', animateIt);
+        linkduo.current.addEventListener('mouseenter', animateIt);
+        linkduo.current.addEventListener('mouseleave', animateIt);
     
 
         console.log(linkduo.current);

@@ -3,19 +3,30 @@ import { projects } from "../ProjectList";
 import SingleProject from "./SingleProject";
 import { gsap, Power2 } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useWindowSize from '../hooks/useWindowSize'
+import { GridItem } from "@chakra-ui/react";
+
 gsap.registerPlugin(ScrollTrigger);
 
 function Projects() {
+
+  const size = useWindowSize()
+
   const panelsContainer = useRef();
   // const panelRef = useRef()
   const panels = useRef([]);
   panels.current = [];
   ScrollTrigger.saveStyles(panelsContainer.current)
-  //   const createPanelsRefs = (panel, index) => {
-  //     panels.current[index] = panel;
-  //     console.log(panel);
-  //   };
-  //   createPanelsRefs()
+
+  useEffect(() => {
+    // setBodyWidth();
+  }, [size.width])
+
+  // const setBodyWidth = () => {
+  //   document.body.style.width = `${
+  //     panelsContainer.current.getBoundingClientRect().width
+  //   }px`;
+  // };
 
   const createRefs = (el) => {
     console.log(el);
@@ -50,7 +61,7 @@ function Projects() {
     <div className="project-container" ref={panelsContainer} id="projects">
       {projects.map((project, index) => (
         <div
-        key={index}
+          key={index}
           className="single"
           style={{
             backgroundColor: `${project.id % 2 == 0 ? "#000" : "#FFF"}`,
@@ -69,13 +80,21 @@ function Projects() {
               </div>
               <div className="btn-container">
                 <button className="btn live"
-                >Go Live</button>
+                >
+                  <a href={project.live} target="_blank">
+                    Go Live
+                  </a>
+                </button>
                 <button className="btn git"
                 style={{
                     color: `${project.id % 2 == 0 ? "#fff" : "#000"}`,
                     borderColor: `${project.id % 2 == 0 ? "#fff" : "#000"}`
                   }}
-                >Go Git</button>
+                >
+                  <a href={project.git} target="_blank">
+                    Go Git
+                  </a>
+                </button>
               </div>
               <ul>
                 {projNum.map((p, i) => (
